@@ -1,5 +1,10 @@
 function cluster_dp(filename, percent)
     shapeset = load(filename);
+    %shapeset = shapeset .* 100;
+    %xmin = min(shapeset(:, 1));
+    %ymin = min(shapeset(:, 2));
+    %shapeset(:, 1) = shapeset(:, 1) + xmin + 1;
+    %shapeset(:, 2) = shapeset(:, 2) + ymin + 2;
     showShapeSet(shapeset);
     distset = shapeset2distset(shapeset);
     dc = computeDc(distset, percent);

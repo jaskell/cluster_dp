@@ -1,4 +1,9 @@
 function distset = shapeset2distset(shapeset)
+    distvar = pdist(shapeset(:, 1:2), 'euclidean');
+    distset = squareform(distvar);
+end
+
+function distset = shapeset2distset1(shapeset)
     casenum = size(shapeset, 1);
     distset = zeros(casenum, casenum);
     for i = 1:casenum-1
