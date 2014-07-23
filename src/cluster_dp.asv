@@ -34,7 +34,6 @@ function cluster_dp(filename, percent)
         end
     end
     showColorShape(shapeset, cluster, cluster_num, ords);
-    
     halo = cluster;
     dc_filter = (distset ~= 0) & (distset < dc);
     elnum = size(distset, 1);
@@ -67,10 +66,15 @@ end
 
 function showElementCount(cluster, halo, cluster_num)
     for i = 0:cluster_num
-        halo_filter = (halo == i);
-        cluster_filter = (cluster == i);
-        nc = length(find(cluster_filter));
-        nh = length(find(halo_filter));
+        filter = (halo == i);
+        x = shapeset(:, 1)';
+        y = shapeset(:, 2)';
+        xx = x(filter);
+        yy = y(filter);
+        ic = int8(i * 32.0 / cluster_num) + 1;
+        fprintf('i: %d, cluster_element: %d\n', i, size(xx, 2));
+        tt=plot(xx, yy, 'o', 'MarkerSize', 2, 'MarkerFaceColor', cmap(ic,:), 'MarkerEdgeColor', cmap(ic,:));
+    end
         fprintf('CLUSTER: %i, ELEMENTS: %i, CORE: %i, HALO: %i\n', i, nc, nh, nc-nh);
     end
 end
@@ -78,7 +82,7 @@ end
 function [min_rho, min_delta] = selectRect()
     subplot(2,2,2);
     rect = getrect;
-    %fprintf('rect(x:%i y:%i width:%i height:%i)\n', rect(1), rect(2), rect(3), rect(4));
+    fprintf('rect(x:%i y:%i width:%i height:%i)\n', rect(1), rect(2), rect(3), rect(4));
     min_rho   = rect(1);
     min_delta = rect(2);
 end
@@ -94,7 +98,7 @@ function showHaloShape(shapeset, cluster, halo, cluster_num, ords)
         xx = x(filter);
         yy = y(filter);
         ic = int8(i * 32.0 / cluster_num) + 1;
-        %fprintf('i: %d, cluster_element: %d\n', i, size(xx, 2));
+        fprintf('i: %d, cluster_element: %d\n', i, size(xx, 2));
         tt=plot(xx, yy, 'o', 'MarkerSize', 2, 'MarkerFaceColor', cmap(ic,:), 'MarkerEdgeColor', cmap(ic,:));
     end
     for i = 1:size(ords, 2)
@@ -104,7 +108,7 @@ function showHaloShape(shapeset, cluster, halo, cluster_num, ords)
         ic = int8(color * 64.0 / cluster_num);
         tt=plot([x], [y], 'o', 'MarkerSize', 10, 'MarkerFaceColor', cmap(ic,:), 'MarkerEdgeColor', cmap(ic,:));
     end    
-    text = strcat('HaloShape: ', num2str(cluster_num));
+    text = strcat('ColorShape: ', num2str(cluster_num));
     title (text, 'FontSize', 15.0);
     xlabel ('x');
     ylabel ('y');    
@@ -121,7 +125,7 @@ function showColorShape(shapeset, cluster, cluster_num, ords)
         xx = x(filter);
         yy = y(filter);
         ic = int8(i * 32.0 / cluster_num) + 1;
-        %fprintf('i: %d, cluster_element: %d\n', i, size(xx, 2));
+        fprintf('i: %d, cluster_element: %d\n', i, size(xx, 2));
         tt=plot(xx, yy, 'o', 'MarkerSize', 2, 'MarkerFaceColor', cmap(ic,:), 'MarkerEdgeColor', cmap(ic,:));
     end
     for i = 1:size(ords, 2)

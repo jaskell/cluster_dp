@@ -5,6 +5,6 @@ filename = 'data/jain.txt';
 %filename = 'data/Aggregation.txt';
 %filename = 'data/fig2_panelB.txt';
 %filename = 'data/fig2_panelC.txt';
-%filename = 'data/example.txt';
+filename = 'data/example.txt';
 percent  = 2.0;
 cluster_dp(filename, percent);
